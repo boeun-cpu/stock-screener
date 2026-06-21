@@ -15,15 +15,13 @@ body { background: #0a0c12; font-family: -apple-system, BlinkMacSystemFont, 'Seg
 .filter-btns { display: flex; gap: 6px; flex-wrap: wrap; }
 .filter-btn { background: #1c1f28; border: 0.5px solid #3a3d48; border-radius: 20px; padding: 5px 14px; color: #a0a4b0; font-size: 13px; cursor: pointer; white-space: nowrap; }
 .filter-btn.active { background: #2a3a5a; border-color: #4a7fc0; color: #6ba3e0; }
-.count { color: #6b7080; font-size: 13px; margin-left: auto; }
-.tags { padding: 8px 20px; border-bottom: 0.5px solid #2a2d35; display: flex; gap: 8px; flex-wrap: wrap; }
-.tag { background: #1e2535; border: 0.5px solid #3a4560; border-radius: 20px; padding: 3px 12px; color: #7a9aca; font-size: 12px; cursor: pointer; }
+.meta { color: #6b7080; font-size: 13px; margin-left: auto; text-align: right; }
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font-size: 13px; }
 thead th { background: #161920; color: #6b7080; font-weight: 400; font-size: 12px; padding: 10px 14px; text-align: right; border-bottom: 0.5px solid #2a2d35; white-space: nowrap; cursor: pointer; user-select: none; }
 thead th:first-child, thead th:nth-child(2) { text-align: left; }
 thead th:hover { color: #a0a4b0; }
-tbody tr { border-bottom: 0.5px solid #1e2130; cursor: pointer; transition: background 0.1s; }
+tbody tr { border-bottom: 0.5px solid #1e2130; cursor: pointer; }
 tbody tr:hover { background: #161a25; }
 td { padding: 10px 14px; text-align: right; color: #c8ccd8; white-space: nowrap; }
 td:first-child { text-align: left; color: #6b7080; font-size: 12px; width: 40px; }
@@ -38,7 +36,7 @@ td:nth-child(2) { text-align: left; }
 .bar-fill { height: 100%; background: #3a5080; border-radius: 2px; }
 .bar-mark { position: absolute; top: -3px; width: 2px; height: 10px; background: #6ba3e0; border-radius: 1px; }
 .pct { color: #8090a0; font-size: 12px; min-width: 34px; text-align: right; }
-.empty { padding: 60px; text-align: center; color: #4a5060; font-size: 14px; }
+.state { padding: 60px; text-align: center; color: #6b7080; font-size: 14px; }
 </style>
 </head>
 <body>
@@ -52,13 +50,7 @@ td:nth-child(2) { text-align: left; }
       <button class="filter-btn" onclick="setFilter('하락',this)">하락</button>
       <button class="filter-btn" onclick="setFilter('신고가',this)">신고가 근접</button>
     </div>
-    <span class="count" id="count">15개 종목</span>
-  </div>
-  <div class="tags">
-    <span class="tag">거래대금↑ × 신고가</span>
-    <span class="tag">시총↑ × 신고가</span>
-    <span class="tag">시총↑ × 신저가</span>
-    <span class="tag">대형주 × 낙폭과대</span>
+    <span class="meta" id="meta">불러오는 중...</span>
   </div>
   <div class="table-wrap">
     <table>
@@ -68,72 +60,71 @@ td:nth-child(2) { text-align: left; }
           <th onclick="sortBy('name')">종목명 ↕</th>
           <th onclick="sortBy('price')">현재가 ↕</th>
           <th onclick="sortBy('change')">등락률 ↕</th>
-          <th onclick="sortBy('volume')">거래대금 ↓</th>
-          <th onclick="sortBy('mktcap')">시총(백만$) ↕</th>
-          <th onclick="sortBy('turn')">회전율 ↕</th>
-          <th onclick="sortBy('high')">고점대비 ↕</th>
-          <th onclick="sortBy('pos')">52주 위치 ↕</th>
+          <th onclick="sortBy('turnover')">거래대금 ↓</th>
+          <th onclick="sortBy('marketCap')">시총(백만$) ↕</th>
+          <th onclick="sortBy('fromHigh')">고점대비 ↕</th>
+          <th onclick="sortBy('pos52')">52주 위치 ↕</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
     </table>
-    <div class="empty" id="empty" style="display:none">검색 결과가 없습니다</div>
+    <div class="state" id="state">데이터를 불러오는 중입니다...</div>
   </div>
 </div>
 <script>
-const stocks = [
-  {name:'마이크론 테크놀로지',ticker:'MU',sector:'반도체·신인프라',price:1133.99,change:8.70,volume:71452499,mktcap:1278835,turn:5.59,high:-1.3,pos:99,high52:true},
-  {name:'엔비디아',ticker:'NVDA',sector:'반도체·신인프라',price:210.69,change:2.95,volume:49917990,mktcap:5098698,turn:0.98,high:-10.9,pos:73,high52:false},
-  {name:'인텔',ticker:'INTC',sector:'반도체·신인프라',price:133.99,change:10.64,volume:30568298,mktcap:673434,turn:4.54,high:-1.1,pos:99,high52:true},
-  {name:'샌디스크',ticker:'SNDK',sector:'반도체·신인프라',price:2184.75,change:11.54,volume:25859759,mktcap:323539,turn:7.99,high:-0.3,pos:100,high52:true},
-  {name:'애플',ticker:'AAPL',sector:'빅테크·플랫폼',price:298.01,change:0.70,volume:25424652,mktcap:4376992,turn:0.58,high:-6.1,pos:84,high52:false},
-  {name:'AMD',ticker:'AMD',sector:'반도체·신인프라',price:537.37,change:4.86,volume:23278208,mktcap:876236,turn:2.66,high:-3.8,pos:95,high52:true},
-  {name:'테슬라',ticker:'TSLA',sector:'전기차·모빌리티',price:400.49,change:1.04,volume:22782787,mktcap:1504128,turn:1.51,high:-19.7,pos:53,high52:false},
-  {name:'마이크로소프트',ticker:'MSFT',sector:'빅테크·플랫폼',price:379.40,change:0.13,volume:22018535,mktcap:2818346,turn:0.78,high:-31.7,pos:12,high52:false},
-  {name:'브로드컴',ticker:'AVGO',sector:'반도체·신인프라',price:411.35,change:4.70,volume:18402710,mktcap:1957031,turn:0.94,high:-16.9,pos:67,high52:false},
-  {name:'아마존닷컴',ticker:'AMZN',sector:'빅테크·플랫폼',price:244.39,change:2.90,volume:17849902,mktcap:2628928,turn:0.68,high:-12.3,pos:59,high52:false},
-  {name:'알파벳 A',ticker:'GOOGL',sector:'빅테크·플랫폼',price:368.03,change:1.17,volume:16079714,mktcap:4459095,turn:0.36,high:-9.9,pos:84,high52:false},
-  {name:'메타 플랫폼스',ticker:'META',sector:'빅테크·플랫폼',price:577.22,change:1.70,volume:15738217,mktcap:1465231,turn:1.07,high:-27.5,pos:21,high52:false},
-  {name:'웨스턴 디지털',ticker:'WDC',sector:'반도체·신인프라',price:746.23,change:4.79,volume:12570362,mktcap:257212,turn:4.89,high:-6.7,pos:93,high52:false},
-  {name:'퀄컴',ticker:'QCOM',sector:'반도체·신인프라',price:226.11,change:6.17,volume:10511711,mktcap:238320,turn:4.41,high:-13.0,pos:75,high52:false},
-  {name:'어플라이드 머티리얼즈',ticker:'AMAT',sector:'반도체·신인프라',price:617.11,change:4.08,volume:10300319,mktcap:489960,turn:2.10,high:-3.4,pos:96,high52:true},
-];
-
-let filtered = [...stocks];
+let allStocks = [];
+let filtered = [];
 let currentFilter = '전체';
-let sortKey = 'volume';
+let sortKey = 'turnover';
 let sortDesc = true;
 
-function fmt(n) { return n.toLocaleString(); }
+function fmt(n) { return Math.round(n).toLocaleString(); }
+
+async function load() {
+  try {
+    const res = await fetch('data.json?t=' + Date.now());
+    if (!res.ok) throw new Error('no data');
+    const data = await res.json();
+    allStocks = data.stocks || [];
+    const d = new Date(data.updated);
+    document.getElementById('meta').textContent =
+      data.count + '개 종목 · ' + d.getFullYear() + '-' +
+      String(d.getMonth()+1).padStart(2,'0') + '-' +
+      String(d.getDate()).padStart(2,'0') + ' 갱신';
+    document.getElementById('state').style.display = 'none';
+    applyFilters();
+  } catch (e) {
+    document.getElementById('state').textContent =
+      '아직 데이터가 없습니다. GitHub Actions를 한 번 실행하면 표시됩니다.';
+    document.getElementById('meta').textContent = '';
+  }
+}
 
 function render() {
   const tbody = document.getElementById('tbody');
-  const empty = document.getElementById('empty');
-  const count = document.getElementById('count');
+  const state = document.getElementById('state');
   if (filtered.length === 0) {
     tbody.innerHTML = '';
-    empty.style.display = 'block';
-    count.textContent = '0개 종목';
+    state.style.display = 'block';
+    state.textContent = '조건에 맞는 종목이 없습니다';
     return;
   }
-  empty.style.display = 'none';
-  count.textContent = filtered.length + '개 종목';
+  state.style.display = 'none';
   tbody.innerHTML = filtered.map((s,i) => {
-    const pos = s.pos;
+    const pos = s.pos52;
     const markPct = Math.max(0, Math.min(96, pos));
     return `<tr>
       <td>${i+1}</td>
       <td>
         <span class="name">${s.name}</span>
-        <span class="sub">${s.ticker} · ${s.sector}</span>
-        ${s.high52 ? '<span class="badge">신고가</span>' : ''}
+        <span class="sub">${s.symbol} · ${s.sector}</span>
+        ${s.nearHigh ? '<span class="badge">신고가</span>' : ''}
       </td>
       <td>${fmt(s.price)}</td>
       <td class="${s.change>=0?'up':'down'}">${s.change>=0?'+':''}${s.change.toFixed(2)}%</td>
-      <td>${fmt(s.volume)}</td>
-      <td>${fmt(s.mktcap)}</td>
-      <td class="${s.turn>3?'up':''}">${s.turn.toFixed(2)}%</td>
-      <td class="${s.high>=-5?'up':'down'}">${s.high.toFixed(1)}%</td>
+      <td>${fmt(s.turnover)}</td>
+      <td>${fmt(s.marketCap)}</td>
+      <td class="${s.fromHigh>=-5?'up':'down'}">${s.fromHigh.toFixed(1)}%</td>
       <td>
         <div class="pos52">
           <div class="bar-track">
@@ -149,13 +140,13 @@ function render() {
 
 function applyFilters() {
   const q = document.getElementById('search').value.toLowerCase();
-  filtered = stocks.filter(s => {
-    const matchSearch = !q || s.name.includes(q) || s.ticker.toLowerCase().includes(q);
+  filtered = allStocks.filter(s => {
+    const matchSearch = !q || s.name.toLowerCase().includes(q) || s.symbol.toLowerCase().includes(q);
     const matchFilter =
       currentFilter === '전체' ? true :
       currentFilter === '상승' ? s.change > 0 :
       currentFilter === '하락' ? s.change < 0 :
-      currentFilter === '신고가' ? s.high52 : true;
+      currentFilter === '신고가' ? s.nearHigh : true;
     return matchSearch && matchFilter;
   });
   sortFiltered();
@@ -184,7 +175,7 @@ function sortFiltered() {
   });
 }
 
-applyFilters();
+load();
 </script>
 </body>
 </html>
