@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-23T01:32:46.732113+00:00",
+  "updated": "2026-06-23T10:46:55.635743+00:00",
   "count": 44,
   "stocks": [
     {
@@ -12,8 +12,8 @@
       "turnover": 24006515982,
       "marketCap": 5053712,
       "yearHigh": 236.54,
-      "yearLow": 142.03,
-      "pos52": 70,
+      "yearLow": 145.5,
+      "pos52": 69,
       "fromHigh": -11.8,
       "nearHigh": false
     },
@@ -42,7 +42,7 @@
       "turnover": 18196162134,
       "marketCap": 4229334,
       "yearHigh": 408.61,
-      "yearLow": 162,
+      "yearLow": 166.13,
       "pos52": 76,
       "fromHigh": -14.4,
       "nearHigh": false
@@ -101,8 +101,8 @@
       "volume": 25248056,
       "turnover": 13927585131,
       "marketCap": 899488,
-      "yearHigh": 562.9899,
-      "yearLow": 126.82,
+      "yearHigh": 562.99,
+      "yearLow": 132.93,
       "pos52": 97,
       "fromHigh": -2.0,
       "nearHigh": true
@@ -117,7 +117,7 @@
       "turnover": 11924726366,
       "marketCap": 4362292,
       "yearHigh": 317.4,
-      "yearLow": 198.96,
+      "yearLow": 199.26,
       "pos52": 83,
       "fromHigh": -6.4,
       "nearHigh": false
@@ -192,8 +192,8 @@
       "turnover": 3364796134,
       "marketCap": 888204,
       "yearHigh": 338.09,
-      "yearLow": 272.11,
-      "pos52": 90,
+      "yearLow": 279.1,
+      "pos52": 89,
       "fromHigh": -2.0,
       "nearHigh": false
     },
@@ -252,7 +252,7 @@
       "turnover": 2054953936,
       "marketCap": 326387,
       "yearHigh": 1125,
-      "yearLow": 630.01,
+      "yearLow": 653.24,
       "pos52": 96,
       "fromHigh": -1.7,
       "nearHigh": true
@@ -297,7 +297,7 @@
       "turnover": 1941226222,
       "marketCap": 556765,
       "yearHigh": 251.71,
-      "yearLow": 149.74,
+      "yearLow": 150.73,
       "pos52": 80,
       "fromHigh": -8.1,
       "nearHigh": false
@@ -372,7 +372,7 @@
       "turnover": 1495026360,
       "marketCap": 248451,
       "yearHigh": 147.96,
-      "yearLow": 77.51,
+      "yearLow": 79.88,
       "pos52": 97,
       "fromHigh": -1.5,
       "nearHigh": true
@@ -417,8 +417,8 @@
       "turnover": 1265119098,
       "marketCap": 21935,
       "yearHigh": 32.73,
-      "yearLow": 14.64,
-      "pos52": 14,
+      "yearLow": 14.92,
+      "pos52": 12,
       "fromHigh": -47.8,
       "nearHigh": false
     },
@@ -432,7 +432,7 @@
       "turnover": 1177371595,
       "marketCap": 371040,
       "yearHigh": 364.7,
-      "yearLow": 238.62,
+      "yearLow": 243.34,
       "pos52": 92,
       "fromHigh": -2.6,
       "nearHigh": false
@@ -597,7 +597,7 @@
       "turnover": 713783595,
       "marketCap": 72521,
       "yearHigh": 87.62,
-      "yearLow": 47.63,
+      "yearLow": 47.72,
       "pos52": 82,
       "fromHigh": -8.2,
       "nearHigh": false

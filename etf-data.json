@@ -1,6 +1,6 @@
 {
-  "updated": "2026-06-23T01:32:52.504963+00:00",
-  "count": 2,
+  "updated": "2026-06-23T10:47:01.208624+00:00",
+  "count": 1,
   "stocks": [
     {
       "symbol": "SPY",
@@ -12,25 +12,10 @@
       "turnover": 33614876285,
       "marketCap": 768788,
       "yearHigh": 760.4,
-      "yearLow": 591.89,
+      "yearLow": 603.41,
       "pos52": 90,
       "fromHigh": -2.1,
       "nearHigh": false
-    },
-    {
-      "symbol": "VWO",
-      "name": "Vanguard FTSE Emerging Markets ETF",
-      "sector": "해외주식",
-      "price": 61.24,
-      "change": 0.77,
-      "volume": 13738271,
-      "turnover": 841331716,
-      "marketCap": 164433,
-      "yearHigh": 61.515,
-      "yearLow": 47.46,
-      "pos52": 98,
-      "fromHigh": -0.4,
-      "nearHigh": true
     }
   ]
 }
