@@ -1,35 +1,35 @@
 {
-  "updated": "2026-08-12T22:33:06.462400+00:00",
+  "updated": "2026-08-13T22:33:50.281703+00:00",
   "count": 2,
   "stocks": [
     {
       "symbol": "SPY",
       "name": "State Street SPDR S&P 500 ETF",
       "sector": "대표지수",
-      "price": 772.49,
-      "change": 0.25,
+      "price": 777.88,
+      "change": 0.7,
       "volume": 0,
       "turnover": 0,
-      "marketCap": 822886,
-      "yearHigh": 776.85,
+      "marketCap": 828628,
+      "yearHigh": 779.37,
       "yearLow": 629.28,
-      "pos52": 97,
-      "fromHigh": -0.6,
+      "pos52": 99,
+      "fromHigh": -0.2,
       "nearHigh": true
     },
     {
       "symbol": "VWO",
       "name": "Vanguard FTSE Emerging Markets ETF",
       "sector": "해외주식",
-      "price": 60.41,
-      "change": 0.48,
+      "price": 60.34,
+      "change": -0.12,
       "volume": 0,
       "turnover": 0,
-      "marketCap": 168656,
+      "marketCap": 168461,
       "yearHigh": 61.52,
       "yearLow": 51.01,
       "pos52": 89,
-      "fromHigh": -1.8,
+      "fromHigh": -1.9,
       "nearHigh": false
     }
   ]
