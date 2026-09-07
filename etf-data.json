@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-04T23:36:53.118074+00:00",
+  "updated": "2026-09-07T23:53:57.065013+00:00",
   "count": 2,
   "stocks": [
     {
@@ -26,8 +26,8 @@
       "volume": 5445627,
       "turnover": 334579323,
       "marketCap": 171532,
-      "yearHigh": 61.535,
-      "yearLow": 51.77,
+      "yearHigh": 61.54,
+      "yearLow": 52.2,
       "pos52": 99,
       "fromHigh": -0.2,
       "nearHigh": true
